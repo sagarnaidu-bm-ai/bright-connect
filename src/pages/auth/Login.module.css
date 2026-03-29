@@ -1,86 +1,168 @@
 .page {
   display: flex;
   height: 100vh;
-  width: 100vw;
+  min-height: 700px;
+  font-family: 'DM Sans', sans-serif;
 }
 
+/* ════════════════════════════
+   LEFT PANEL
+════════════════════════════ */
 .leftPanel {
-  width: 50%;
-  background: #0f4625;
+  width: 48%;
+  background: #1a3c2e;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-left: 48px;
-  padding-right: 48px;
-  padding-bottom: 48px;
   position: relative;
+  overflow: hidden;
 }
 
-.brand {
+/* Subtle radial glow — top-left */
+.leftPanel::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: -120px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,180,100,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Subtle radial glow — bottom-right */
+.leftPanel::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: -80px;
+  width: 350px; height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,180,100,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Brand header (top-anchored) ── */
+.brandHeader {
+  padding: 28px 40px;
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  position: relative;
+  z-index: 1;
 }
 
-.brandIcon {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  background: white;
+.brandLogo {
+  width: 40px;
+  height: 40px;
+  background: #fff;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   padding: 6px;
 }
 
+.brandIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
 .brandName {
-  font-size: 24px;
-  font-weight: 600;
-  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.brandSubline {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── Vertically centered body ── */
+.leftBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 48px;
+  position: relative;
+  z-index: 1;
 }
 
 .tagline {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 14px;
+  font-family: 'Instrument Serif', serif;
+  font-size: 38px;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.25;
   margin-bottom: 40px;
-  text-align: center;
+  max-width: 320px;
 }
 
+.taglineAccent {
+  color: #5dcc7a;
+  font-style: normal;
+}
+
+/* ── Feature list ── */
 .features {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 320px;
+  gap: 16px;
+  padding: 0;
+  margin: 0;
 }
 
 .featureItem {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: rgba(255, 255, 255, 0.85);
+  gap: 12px;
   font-size: 14px;
+  color: rgba(255,255,255,0.75);
 }
 
-.featureCheck {
-  color: #17c95f;
-  flex-shrink: 0;
-}
-
-.copyright {
-  position: absolute;
-  bottom: 24px;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 12px;
-}
-
-.rightPanel {
-  width: 50%;
+.check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(93,204,122,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  flex-shrink: 0;
+  color: #5dcc7a;
+  font-size: 11px;
+}
+
+/* ── Footer (bottom-anchored) ── */
+.leftFooter {
+  padding: 20px 40px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════
+   RIGHT PANEL
+════════════════════════════ */
+.rightPanel {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 48px;
 }
 
@@ -90,59 +172,57 @@
 }
 
 .formTitle {
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.02em;
   margin-bottom: 6px;
 }
 
 .formSubtitle {
   font-size: 14px;
-  color: var(--text-muted);
+  color: #888;
   margin-bottom: 32px;
 }
 
-.ssoButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.ssoBtn {
+/* ── Google button ── */
+.googleBtn {
+  width: 100%;
+  padding: 13px 20px;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 10px;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 100%;
-  height: 44px;
-  border: 1px solid var(--border-default);
-  border-radius: 10px;
-  background: #ffffff;
+  gap: 10px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-body);
+  color: #333;
   cursor: pointer;
-  transition: box-shadow 0.15s, background 0.15s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-.ssoBtn:hover {
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-  background: #fafafa;
+.googleBtn:hover:not(:disabled) {
+  border-color: #bbb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.ssoBtn:disabled {
-  opacity: 0.7;
+.googleBtn:disabled {
+  opacity: 0.65;
   cursor: not-allowed;
 }
 
+/* ── Divider ── */
 .divider {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 24px 0;
-  color: var(--text-muted);
+  color: #ccc;
   font-size: 12px;
 }
 
@@ -151,100 +231,135 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: var(--border-default);
+  background: #e8e8e8;
 }
 
-.fields {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 8px;
+/* ── Form fields ── */
+.fieldGroup {
+  margin-bottom: 16px;
 }
 
+.fieldLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.fieldInput {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 9px;
+  font-size: 14px;
+  color: #222;
+  font-family: 'DM Sans', sans-serif;
+  background: #fafafa;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.fieldInput:focus {
+  border-color: #2d7a4e;
+  background: #fff;
+}
+
+.fieldInput::placeholder { color: #bbb; }
+
+.fieldInputError {
+  border-color: #f87171;
+}
+
+.fieldError {
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 4px;
+}
+
+/* ── Forgot password ── */
 .forgotLink {
   display: block;
   text-align: right;
   font-size: 13px;
-  color: var(--green-dark);
+  font-weight: 500;
+  color: #2d9e5e;
   text-decoration: none;
+  margin-top: -4px;
   margin-bottom: 20px;
-  margin-top: 4px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   width: 100%;
+  font-family: 'DM Sans', sans-serif;
 }
 
-.forgotLink:hover {
-  text-decoration: underline;
-}
+.forgotLink:hover { text-decoration: underline; }
 
+/* ── Sign in button ── */
 .submitBtn {
   width: 100%;
-  height: 44px;
-  background: var(--green-primary);
-  color: white;
+  padding: 14px;
+  background: #2ab55a;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: -0.01em;
+  transition: background 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.submitBtn:hover {
-  background: var(--green-dark);
-}
+.submitBtn:hover:not(:disabled) { background: #249e4f; }
+.submitBtn:disabled { opacity: 0.7; cursor: not-allowed; }
 
-.submitBtn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.bottomNote {
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 24px;
-}
-
+/* ── Error message ── */
 .errorMsg {
-  color: var(--error);
   font-size: 12px;
-  margin-top: 8px;
+  color: #ef4444;
+  margin-bottom: 12px;
   padding: 8px 12px;
   background: #fff0f0;
   border-radius: 6px;
   border: 1px solid #ffd0d0;
 }
 
+/* ── Bottom note ── */
+.bottomNote {
+  text-align: center;
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 16px;
+}
+
+/* ── Spinners ── */
 .spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #ffffff;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
   flex-shrink: 0;
 }
 
 .ssoBtnSpinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(0, 0, 0, 0.12);
-  border-top-color: var(--green-dark);
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(0,0,0,0.12);
+  border-top-color: #2d7a4e;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
   flex-shrink: 0;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
