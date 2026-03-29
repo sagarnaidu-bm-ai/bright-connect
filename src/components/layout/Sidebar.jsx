@@ -1,6 +1,7 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import brightIcon from '../../assets/bright-icon.png';
+import { useAuth } from '../../context/AuthContext';
 import styles from './Sidebar.module.css';
 
 const CampaignsIcon = () => (
@@ -36,9 +37,38 @@ const UserProfileIcon = () => (
   </svg>
 );
 
+const LogoutIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M6 2H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3M10 10.5l3-3-3-3M13 7.5H6"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const isSettings = location.pathname.startsWith('/settings');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const getInitials = (name) => {
+    if (!name) return 'BU';
+    return name
+      .split(' ')
+      .map((part) => part[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase();
+  };
 
   return (
     <aside className={styles.sidebar}>
@@ -116,6 +146,24 @@ const Sidebar = () => {
           </div>
         )}
       </nav>
+
+      {user && (
+        <div className={styles.userSection}>
+          <div className={styles.userAvatar}>{getInitials(user.name)}</div>
+          <div className={styles.userInfo}>
+            <div className={styles.userName}>{user.name}</div>
+            <div className={styles.userRole}>{user.role}</div>
+          </div>
+          <button
+            className={styles.logoutBtn}
+            onClick={handleLogout}
+            title="Sign out"
+            aria-label="Sign out"
+          >
+            <LogoutIcon />
+          </button>
+        </div>
+      )}
     </aside>
   );
 };
