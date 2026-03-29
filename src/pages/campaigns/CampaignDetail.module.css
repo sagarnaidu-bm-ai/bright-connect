@@ -1,0 +1,193 @@
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.12s ease;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.backLink:hover {
+  color: var(--text-primary);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.campaignName {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.periodRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.periodLabel {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.periodPills {
+  display: flex;
+  gap: 4px;
+}
+
+.periodPill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--border-default);
+  background: #ffffff;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.periodPill:hover {
+  border-color: var(--green-primary);
+  color: var(--green-dark);
+  background: var(--green-light);
+}
+
+.periodPillActive {
+  background: var(--green-light);
+  color: var(--green-dark);
+  border-color: var(--green-primary);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.statCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: box-shadow 0.15s ease;
+}
+
+.statCard:hover {
+  box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.06);
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.statValue {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.statDelta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--green-dark);
+}
+
+.statDeltaNeg {
+  color: var(--error);
+}
+
+.sectionCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.configGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+}
+
+.configItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.configLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.configValue {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.tableCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+}

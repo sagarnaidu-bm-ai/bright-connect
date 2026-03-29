@@ -1,0 +1,113 @@
+.section {
+  margin-bottom: 24px;
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.scheduleOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scheduleCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 8px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.scheduleCard:hover {
+  border-color: var(--border-strong);
+}
+
+.scheduleCardActive {
+  border-color: var(--green-primary);
+  background: var(--green-light);
+}
+
+.scheduleCardTitle {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-body);
+}
+
+.scheduleCardActive .scheduleCardTitle {
+  color: var(--green-dark);
+}
+
+.scheduleCardDesc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.radioInput {
+  accent-color: var(--green-primary);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.uploadBox {
+  border: 2px dashed var(--border-default);
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.uploadBox:hover {
+  border-color: var(--green-primary);
+  background: var(--green-light);
+}
+
+.uploadLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 8px;
+}
+
+.uploadSub {
+  font-size: 12px;
+  color: var(--text-disabled);
+  margin-top: 4px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 6px;
+}

@@ -1,0 +1,403 @@
+/* ── Search section ── */
+.searchSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.searchBar {
+  width: 100%;
+  max-width: 500px;
+}
+
+.searchLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.searchInputRow {
+  display: flex;
+  gap: 10px;
+}
+
+.searchInput {
+  flex: 1;
+  height: 40px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1.5px solid var(--border-default);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.searchInput:focus {
+  border-color: var(--green-primary);
+  box-shadow: 0 0 0 3px rgba(45, 199, 109, 0.15);
+}
+
+.searchInput::placeholder {
+  color: var(--text-disabled);
+}
+
+.searchBtn {
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  color: #ffffff;
+  background: var(--green-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.searchBtn:hover:not(:disabled) {
+  background: var(--green-dark);
+}
+
+.searchBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Loading spinner ── */
+.spinnerWrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-default);
+  border-top-color: var(--green-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Error callout ── */
+.errorCallout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  background: #fff5f5;
+  border: 1px solid var(--error);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--error);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+/* ── Empty state ── */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-body);
+}
+
+.emptyDesc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+/* ── User card ── */
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--green-primary);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.userMeta {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.userRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.uidBadge {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 3px 10px;
+}
+
+.statusBadge {
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.statusActive {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.statusInactive {
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+
+/* ── Activity section ── */
+.activitySection {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.activityTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 20px 24px 0;
+  margin-bottom: 16px;
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.filterPill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--border-default);
+  background: #ffffff;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.filterPill:hover {
+  border-color: var(--green-primary);
+  color: var(--green-dark);
+  background: var(--green-light);
+}
+
+.filterPillActive {
+  background: var(--green-light);
+  color: var(--green-dark);
+  border-color: var(--green-primary);
+}
+
+.noActivity {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 32px 24px;
+  text-align: center;
+}
+
+/* ── Table ── */
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-default);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tr {
+  transition: background 0.1s ease;
+}
+
+.tr:hover {
+  background: var(--bg-surface);
+}
+
+.tr:not(:last-child) .td {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.td {
+  padding: 12px 16px;
+  vertical-align: middle;
+}
+
+.timestamp {
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.campaignLink {
+  font-size: 13px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.12s ease;
+}
+
+.campaignLink:hover {
+  color: var(--green-dark);
+}
+
+.details {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Event type badges ── */
+.eventBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.eventBadge_sent {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.eventBadge_delivered {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.eventBadge_opened {
+  background: #F3E8FF;
+  color: #7C3AED;
+}
+
+.eventBadge_clicked {
+  background: #FFFBEB;
+  color: #92400E;
+}
+
+.eventBadge_failed {
+  background: #FFF5F5;
+  color: var(--error);
+}
+
+.eventBadge_unsub {
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+
+/* ── Channel badges ── */
+.channelBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.channelBadge_email {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.channelBadge_push {
+  background: #F3E8FF;
+  color: #7C3AED;
+}
+
+.channelBadge_sms {
+  background: #FFFBEB;
+  color: #92400E;
+}

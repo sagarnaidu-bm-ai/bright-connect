@@ -1,0 +1,345 @@
+.mainCardRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.mainCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px 20px;
+  background: #ffffff;
+  border: 2px solid var(--border-default);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.mainCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+.mainCardActive {
+  border-color: var(--green-primary);
+  background: var(--green-light);
+  box-shadow: 0 2px 12px rgba(45, 199, 109, 0.15);
+}
+
+.hiddenRadio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.mainCardCheck {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  background: var(--green-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  animation: popIn 0.18s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.mainCardIcon {
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.mainCardActive .mainCardIcon {
+  color: var(--green-dark);
+}
+
+.mainCardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mainCardActive .mainCardTitle {
+  color: var(--green-dark);
+}
+
+.mainCardSubtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.mainCardActive .mainCardSubtitle {
+  color: var(--green-dark);
+  opacity: 0.75;
+}
+
+/* ── Sub section ── */
+.subSection {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 24px;
+  animation: fadeSlideIn 0.2s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Sub cards ── */
+.subCardRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.subCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 16px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-default);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.subCard:hover {
+  border-color: var(--border-strong);
+}
+
+.subCardActive {
+  border-color: var(--green-primary);
+  background: var(--green-light);
+}
+
+.subCardIcon {
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.subCardActive .subCardIcon {
+  color: var(--green-dark);
+}
+
+.subCardTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.subCardActive .subCardTitle {
+  color: var(--green-dark);
+}
+
+.subCardDesc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Schedule inputs ── */
+.scheduleInputs {
+  animation: fadeSlideIn 0.18s ease;
+}
+
+.dateTimeRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 130px;
+}
+
+.inputLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nativeInput {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nativeInput:focus {
+  border: 2px solid var(--green-primary);
+  box-shadow: 0 0 0 2px rgba(45, 199, 109, 0.15);
+}
+
+.nativeSelect {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.nativeSelect:focus {
+  border: 2px solid var(--green-primary);
+}
+
+.readonlyField {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Freq pills ── */
+.freqPills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.freqPill {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  border: 1.5px solid var(--border-default);
+  background: #ffffff;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.freqPill:hover {
+  border-color: var(--border-strong);
+  color: var(--text-body);
+}
+
+.freqPillActive {
+  background: var(--green-primary);
+  color: #ffffff;
+  border-color: var(--green-primary);
+}
+
+/* ── Day pills ── */
+.dayPills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dayPill {
+  width: 42px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  border: 1.5px solid var(--border-default);
+  background: #ffffff;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dayPill:hover {
+  border-color: var(--green-primary);
+  color: var(--green-dark);
+}
+
+.dayPillActive {
+  background: var(--green-primary);
+  color: #ffffff;
+  border-color: var(--green-primary);
+}
+
+/* ── Custom interval ── */
+.customIntervalRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ── Summary callout ── */
+.summaryCallout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--green-light);
+  border: 1px solid rgba(45, 199, 109, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--green-dark);
+  line-height: 1.5;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+.endDateNote {
+  font-size: 12px;
+  color: var(--green-dark);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* ── Error ── */
+.errorText {
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 4px;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+/* ── Misc ── */
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}

@@ -1,0 +1,232 @@
+.filterRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+.pill {
+  padding: 5px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--border-default);
+  background: #ffffff;
+  color: var(--text-muted);
+  transition: all 0.18s ease;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+.pill:hover {
+  border-color: var(--green-primary);
+  color: var(--green-dark);
+  background: var(--green-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(45, 199, 109, 0.15);
+}
+
+.pillActive {
+  background: var(--green-primary);
+  color: #ffffff;
+  border-color: var(--green-primary);
+  box-shadow: 0 1px 4px rgba(45, 199, 109, 0.2);
+}
+
+.dateFilterRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.dateInput {
+  height: 36px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-body);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+  cursor: pointer;
+}
+
+.dateInput:focus {
+  border-color: var(--green-primary);
+}
+
+.dateSeparator {
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.dateClear {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+  transition: color 0.12s ease;
+}
+
+.dateClear:hover {
+  color: var(--text-body);
+}
+
+.tableCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.campaignId {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.nameLink {
+  color: var(--text-primary);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.12s ease;
+}
+
+.nameLink:hover {
+  color: var(--green-dark);
+}
+
+.moreBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: inherit;
+  transition: background 0.12s ease;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.moreBtn:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.menuWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 50;
+  min-width: 160px;
+  padding: 5px 0;
+  animation: menuOpen 0.14s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top right;
+}
+
+@keyframes menuOpen {
+  from { opacity: 0; transform: scale(0.92) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-body);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.1s ease;
+}
+
+.menuItem:hover {
+  background: var(--bg-card);
+}
+
+.menuItemDanger {
+  color: var(--error);
+}
+
+.menuItemDanger:hover {
+  background: #FFEBEB;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 24px;
+  color: var(--text-muted);
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-body);
+}
+
+.emptyDesc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.modalText {
+  font-size: 14px;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+.modalCampaignName {
+  font-weight: 600;
+  color: var(--text-primary);
+}

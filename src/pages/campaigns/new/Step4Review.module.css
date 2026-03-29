@@ -1,0 +1,139 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.section {
+  background: var(--bg-surface);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.itemLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.itemValue {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.itemEmpty {
+  color: var(--text-disabled);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.previewSection {
+  grid-column: 1 / -1;
+}
+
+.contentPreview {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text-body);
+  line-height: 1.7;
+  max-height: 160px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.testCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.testCardLeft {
+  flex: 1;
+}
+
+.testCardTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.testCardDesc {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.testRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 280px;
+}
+
+.testInput {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.testInput:focus {
+  border: 2px solid var(--green-primary);
+}
+
+.checklist {
+  margin-bottom: 24px;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-body);
+}
+
+.checkIcon {
+  flex-shrink: 0;
+}

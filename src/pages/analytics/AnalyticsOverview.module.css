@@ -1,0 +1,99 @@
+.dateToggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+}
+
+.dateBtn {
+  padding: 5px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s ease;
+}
+
+.dateBtnActive {
+  background: #ffffff;
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metricCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: box-shadow 0.15s ease;
+}
+
+.metricCard:hover {
+  box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.06);
+}
+
+.metricLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.metricValue {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.metricRate {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--green-dark);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.tableCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.naText {
+  color: var(--text-disabled);
+  font-size: 13px;
+}
+
+.rateCell {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+}

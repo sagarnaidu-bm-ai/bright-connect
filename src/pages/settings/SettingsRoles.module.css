@@ -1,0 +1,138 @@
+.tableCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.roleSelect {
+  height: 30px;
+  padding: 0 28px 0 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-body);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.roleSelect:focus {
+  border: 2px solid var(--green-primary);
+}
+
+.roleSelectWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.roleSelectChevron {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--error);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background 0.12s ease;
+}
+
+.removeBtn:hover {
+  background: #FFEBEB;
+}
+
+.matrixCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.permRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-default);
+  font-size: 13px;
+}
+
+.permRow:last-child {
+  border-bottom: none;
+}
+
+.permHeader {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.permName {
+  color: var(--text-body);
+}
+
+.checkMark {
+  color: var(--green-primary);
+}
+
+.crossMark {
+  color: var(--text-disabled);
+}
+
+.matrixTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.inviteForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.inviteRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.userEmail {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.actionCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

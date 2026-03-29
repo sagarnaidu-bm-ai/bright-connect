@@ -1,0 +1,404 @@
+.card {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.fieldGroup {
+  margin-bottom: 22px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.required {
+  color: var(--error);
+  margin-left: 2px;
+}
+
+/* ── Chips ── */
+.chipsBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: #ffffff;
+  min-height: 42px;
+  cursor: text;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.chipsBox:focus-within {
+  border: 2px solid var(--green-primary);
+  box-shadow: 0 0 0 2px rgba(45, 199, 109, 0.15);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px 3px 10px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  animation: chipPop 0.15s ease;
+}
+
+@keyframes chipPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.chipRemove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--green-dark);
+  padding: 0;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.12s ease;
+}
+
+.chipRemove:hover {
+  opacity: 1;
+}
+
+.chipInput {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: transparent;
+  flex: 1;
+  min-width: 160px;
+}
+
+.chipInput::placeholder {
+  color: var(--text-disabled);
+}
+
+/* ── Filters ── */
+.filterHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.emptyFilters {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 10px 0;
+}
+
+.filterRow {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr 36px;
+  gap: 8px;
+  align-items: center;
+  background: var(--bg-surface);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.filterInput {
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filterInput:focus {
+  border-color: var(--green-primary);
+  box-shadow: 0 0 0 2px rgba(45, 199, 109, 0.12);
+}
+
+.filterInput::placeholder {
+  color: var(--text-disabled);
+}
+
+.filterSelect {
+  height: 34px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.filterSelect:focus {
+  border-color: var(--green-primary);
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.removeBtn:hover {
+  background: #FFEBEB;
+  color: var(--error);
+}
+
+.addConditionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--green-dark);
+  background: var(--green-light);
+  border: 1px solid var(--green-primary);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.addConditionBtn:hover {
+  background: #d0eddc;
+}
+
+/* ── Info banner ── */
+.infoBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--green-light);
+  border: 1px solid rgba(45, 199, 109, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--green-dark);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* ── CSV Dropzone ── */
+.dropzone {
+  border: 2px dashed var(--border-default);
+  border-radius: 10px;
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dropzone:hover,
+.dropzoneActive {
+  border-color: var(--green-primary);
+  background: var(--green-light);
+}
+
+.dropIcon {
+  margin-bottom: 6px;
+}
+
+.dropTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dropSub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.dropCaption {
+  font-size: 11px;
+  color: var(--text-disabled);
+  margin-top: 4px;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* ── File card ── */
+.fileCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.fileCardIcon {
+  flex-shrink: 0;
+}
+
+.fileCardInfo {
+  flex: 1;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.fileRows {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.reuploadBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--green-dark);
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.12s ease;
+}
+
+.reuploadBtn:hover {
+  background: var(--green-light);
+}
+
+/* ── Column mapper ── */
+.columnMapper {
+  padding: 20px;
+  background: var(--bg-surface);
+  border-radius: 10px;
+  margin-top: 4px;
+}
+
+.mapperTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.mapperSubtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.mapRow {
+  display: grid;
+  grid-template-columns: 160px 28px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.csvPill {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  color: var(--text-body);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mapArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.mapSelect {
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.mapSelect:focus {
+  border-color: var(--green-primary);
+}
+
+/* ── Shared ── */
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 6px;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,173 @@
+.fieldCard {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.section {
+  /* no extra margin — fieldCard provides spacing */
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.requiredAsterisk {
+  color: var(--error);
+  margin-left: 2px;
+}
+
+.radioGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.radioGridThree {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.radioGridThree .radioCard {
+  min-width: 0;
+}
+
+.radioCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 16px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  background: #ffffff;
+  min-height: 90px;
+  overflow: hidden;
+}
+
+.radioCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.radioCardActive {
+  border-color: var(--green-primary);
+  background: var(--green-light);
+  border-left: 3px solid var(--green-primary);
+  box-shadow: 0 2px 8px rgba(45, 199, 109, 0.12);
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.radioCheckmark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  background: var(--green-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  animation: popIn 0.18s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.radioIcon {
+  color: var(--text-muted);
+  transition: color 0.18s ease;
+  margin-bottom: 2px;
+}
+
+.radioIconActive {
+  color: var(--green-dark);
+}
+
+.radioTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.radioCardActive .radioTitle {
+  color: var(--green-dark);
+}
+
+.radioDesc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.radioCardActive .radioDesc {
+  color: var(--green-dark);
+  opacity: 0.75;
+}
+
+.radioNote {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.radioCardActive .radioNote {
+  color: var(--green-dark);
+  opacity: 0.7;
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 8px;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.smsWarning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #FFEBEB;
+  border: 1px solid var(--error);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--error);
+  line-height: 1.5;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-default);
+  margin: 24px 0;
+}

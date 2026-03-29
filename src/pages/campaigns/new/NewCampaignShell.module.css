@@ -1,0 +1,99 @@
+.shell {
+  max-width: 820px;
+  position: relative;
+}
+
+/* ── Progress bar ── */
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--border-default);
+  z-index: 100;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--green-primary);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Title ── */
+.title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0;
+}
+
+/* ── Card ── */
+.card {
+  background: #ffffff;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 0;
+}
+
+/* ── Step transition ── */
+.stepContent {
+  animation-duration: 0.22s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slideForward {
+  animation-name: slideInForward;
+}
+
+.slideBack {
+  animation-name: slideInBack;
+}
+
+@keyframes slideInForward {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInBack {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Action bar ── */
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-default);
+  margin-top: 28px;
+  margin-left: -32px;
+  margin-right: -32px;
+  margin-bottom: -32px;
+  border-radius: 0 0 12px 12px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.actionRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --green-primary: #2DC76D;
+  --green-dark: #1A8A47;
+  --green-light: #E8F5EE;
+  --bg-white: #FAFAF7;
+  --bg-surface: #F5F5ED;
+  --bg-card: #F2F4F0;
+  --text-primary: #111111;
+  --text-body: #333333;
+  --text-muted: #888888;
+  --text-disabled: #BBBBBB;
+  --border-default: #D0DDD6;
+  --border-strong: #AAAAAA;
+  --status-draft: #888888;
+  --status-active: #2DC76D;
+  --status-paused: #F9A825;
+  --status-scheduled: #378ADD;
+  --error: #E24B4A;
+  --warning: #F9A825;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: var(--text-body);
+  background: var(--bg-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(45, 199, 109, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 3px rgba(45, 199, 109, 0); }
+}
