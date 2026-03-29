@@ -18,17 +18,18 @@ const ROLE_OPTIONS = [
   { value: 'Viewer', label: 'Viewer' },
 ];
 
-const ROLE_BADGE = { Admin: 'success', Creator: 'info', Viewer: 'gray' };
+const ROLE_BADGE = { Admin: 'success', Creator: 'purple', Viewer: 'info' };
 
 const PERMISSIONS = [
-  { name: 'View Campaigns', admin: true, creator: true, viewer: true },
-  { name: 'Create & Edit Campaigns', admin: true, creator: true, viewer: false },
-  { name: 'Activate / Pause Campaigns', admin: true, creator: true, viewer: false },
-  { name: 'Archive Campaigns', admin: true, creator: false, viewer: false },
-  { name: 'View Analytics', admin: true, creator: true, viewer: true },
-  { name: 'Export Data', admin: true, creator: false, viewer: false },
-  { name: 'Manage Settings', admin: true, creator: false, viewer: false },
-  { name: 'Invite & Manage Users', admin: true, creator: false, viewer: false },
+  { name: 'Create campaigns',       admin: true,  creator: true,  viewer: false },
+  { name: 'Edit campaigns',         admin: true,  creator: true,  viewer: false },
+  { name: 'Activate / Pause',       admin: true,  creator: false, viewer: false },
+  { name: 'Archive campaigns',      admin: true,  creator: false, viewer: false },
+  { name: 'Manage sender IDs',      admin: true,  creator: false, viewer: false },
+  { name: 'Manage users & roles',   admin: true,  creator: false, viewer: false },
+  { name: 'Configure settings',     admin: true,  creator: false, viewer: false },
+  { name: 'View campaigns',         admin: true,  creator: true,  viewer: true  },
+  { name: 'View analytics',         admin: true,  creator: true,  viewer: true  },
 ];
 
 const CheckIcon = () => (
@@ -175,13 +176,15 @@ const SettingsRoles = () => {
         <div className={styles.permHeader}>
           <span>Permission</span>
           <span>Admin</span>
-          <span>Creator / Viewer</span>
+          <span>Creator</span>
+          <span>Viewer</span>
         </div>
         {PERMISSIONS.map(perm => (
           <div key={perm.name} className={styles.permRow}>
             <span className={styles.permName}>{perm.name}</span>
             <span>{perm.admin ? <CheckIcon /> : <CrossIcon />}</span>
             <span>{perm.creator ? <CheckIcon /> : <CrossIcon />}</span>
+            <span>{perm.viewer ? <CheckIcon /> : <CrossIcon />}</span>
           </div>
         ))}
       </div>
@@ -220,7 +223,7 @@ const SettingsRoles = () => {
           <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
             <strong>Admin</strong> — Full access including settings and user management.<br />
             <strong>Creator</strong> — Can create, edit, and send campaigns. No settings access.<br />
-            <strong>Viewer</strong> — Read-only access to campaigns and analytics.
+            <strong>Viewer</strong> — Can view campaigns and analytics only.
           </p>
         </div>
       </Modal>

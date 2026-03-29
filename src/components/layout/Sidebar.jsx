@@ -102,18 +102,6 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/settings/general"
-          className={() =>
-            `${styles.navItem} ${isSettings ? styles.navItemActive : ''}`
-          }
-        >
-          <span className={styles.navIcon}>
-            <SettingsIcon />
-          </span>
-          Settings
-        </NavLink>
-
-        <NavLink
           to="/user-profile"
           className={({ isActive }) =>
             `${styles.navItem} ${isActive ? styles.navItemActive : ''}`
@@ -123,6 +111,18 @@ const Sidebar = () => {
             <UserProfileIcon />
           </span>
           User Profile
+        </NavLink>
+
+        <NavLink
+          to="/settings/general"
+          className={() =>
+            `${styles.navItem} ${isSettings ? styles.navItemActive : ''}`
+          }
+        >
+          <span className={styles.navIcon}>
+            <SettingsIcon />
+          </span>
+          Settings
         </NavLink>
 
         {isSettings && (

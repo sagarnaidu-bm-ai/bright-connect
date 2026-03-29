@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import PageHeader from '../../components/layout/PageHeader';
-import { getUserProfile, getUserActivity } from '../../api/userProfile';
+import { getUserProfile, getUserActivity, getChannelStatus } from '../../api/userProfile';
 import { formatDateTime } from '../../utils/formatters';
 import styles from './UserProfile.module.css';
 
@@ -104,6 +104,70 @@ function Spinner() {
   return <div className={styles.spinner} />;
 }
 
+/* ── Channel icons ── */
+
+const EmailIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.4" />
+    <path d="M2 7l8 5 8-5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const PushIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 2a1 1 0 0 1 1 1v.5a5 5 0 0 1 4 4.9V12l1.5 2H3.5L5 12V8.4A5 5 0 0 1 9 3.5V3a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+    <path d="M8 14a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+  </svg>
+);
+
+const SMSIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 4h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6l-4 3V5a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+  </svg>
+);
+
+const CHANNEL_ICONS = { Email: EmailIcon, Push: PushIcon, SMS: SMSIcon };
+
+function formatChannelDate(iso) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function ChannelStatusCard({ channels }) {
+  return (
+    <div className={styles.channelCard}>
+      {channels.map((item, idx) => {
+        const Icon = CHANNEL_ICONS[item.channel] || EmailIcon;
+        const isActive = item.status === 'Active';
+        return (
+          <React.Fragment key={item.channel}>
+            {idx > 0 && <div className={styles.channelDivider} />}
+            <div className={styles.channelItem}>
+              <span className={styles.channelIcon}>
+                <Icon />
+              </span>
+              <span className={styles.channelName}>{item.channel}</span>
+              <span className={`${styles.channelStatus} ${isActive ? styles.channelStatusActive : styles.channelStatusUnsub}`}>
+                {isActive ? 'Active' : 'Unsubscribed'}
+              </span>
+              <span className={styles.channelDate}>
+                {isActive
+                  ? item.lastSent
+                    ? `last sent: ${formatChannelDate(item.lastSent)}`
+                    : 'no sends yet'
+                  : item.unsubscribedAt
+                    ? `unsubscribed: ${formatChannelDate(item.unsubscribedAt)}`
+                    : ''}
+              </span>
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ── Main component ── */
 
 const UserProfile = () => {
@@ -111,6 +175,7 @@ const UserProfile = () => {
   const [searching, setSearching] = useState(false);
   const [user, setUser] = useState(null);
   const [activity, setActivity] = useState([]);
+  const [channelStatus, setChannelStatus] = useState([]);
   const [error, setError] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [eventFilter, setEventFilter] = useState('All');
@@ -123,16 +188,19 @@ const UserProfile = () => {
     setError(null);
     setUser(null);
     setActivity([]);
+    setChannelStatus([]);
     setHasSearched(true);
     setEventFilter('All');
     setDateRange('Last 7 days');
     try {
-      const [userData, activityData] = await Promise.all([
+      const [userData, activityData, channelData] = await Promise.all([
         getUserProfile(trimmed),
         getUserActivity(trimmed),
+        getChannelStatus(trimmed),
       ]);
       setUser(userData);
       setActivity(activityData);
+      setChannelStatus(channelData);
     } catch (err) {
       setError('No user found with this UID. Please check and try again.');
     } finally {
@@ -191,6 +259,10 @@ const UserProfile = () => {
       {!searching && user && (
         <>
           <UserCard user={user} />
+
+          {channelStatus.length > 0 && (
+            <ChannelStatusCard channels={channelStatus} />
+          )}
 
           <div className={styles.activitySection}>
             <p className={styles.activityTitle}>Activity Log</p>

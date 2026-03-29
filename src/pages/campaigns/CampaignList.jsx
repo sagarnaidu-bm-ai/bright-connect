@@ -105,6 +105,7 @@ const EmptyState = () => {
 };
 
 const CampaignList = () => {
+  const [nameSearch, setNameSearch] = useState('');
   const [channelFilter, setChannelFilter] = useState('All');
   const [typeFilter, setTypeFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
@@ -117,6 +118,7 @@ const CampaignList = () => {
   const navigate = useNavigate();
 
   const filtered = campaigns.filter(c => {
+    if (nameSearch && !c.name.toLowerCase().includes(nameSearch.toLowerCase())) return false;
     if (channelFilter !== 'All' && c.channel !== channelFilter) return false;
     if (typeFilter !== 'All' && c.type !== typeFilter) return false;
     if (statusFilter !== 'All' && c.status !== statusFilter) return false;
@@ -214,6 +216,14 @@ const CampaignList = () => {
       />
 
       <div className={styles.filterRow}>
+        <input
+          type="text"
+          className={styles.nameSearchInput}
+          placeholder="Search by campaign name..."
+          value={nameSearch}
+          onChange={e => setNameSearch(e.target.value)}
+          aria-label="Search campaigns by name"
+        />
         <FilterPills label="Channel" options={CHANNEL_TYPES} value={channelFilter} onChange={setChannelFilter} />
         <FilterPills label="Type" options={CAMPAIGN_TYPES} value={typeFilter} onChange={setTypeFilter} />
         <FilterPills label="Status" options={CAMPAIGN_STATUSES} value={statusFilter} onChange={setStatusFilter} />

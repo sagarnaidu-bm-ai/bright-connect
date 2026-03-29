@@ -115,7 +115,7 @@ const Login = () => {
           <span className={styles.brandName}>Bright Connect</span>
         </div>
 
-        <p className={styles.tagline}>Internal communications platform</p>
+        <p className={styles.tagline}>Powering every conversation with your users</p>
 
         <div className={styles.features}>
           {FEATURES.map((f) => (

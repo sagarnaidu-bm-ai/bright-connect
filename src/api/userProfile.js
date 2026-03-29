@@ -32,3 +32,25 @@ export const getUserActivity = async (uid, filters = {}) => {
   await new Promise(r => setTimeout(r, 300));
   return MOCK_ACTIVITY;
 };
+
+const CHANNEL_STATUS = {
+  'USR_a1b2c3': [
+    { channel: 'Email', status: 'Active', lastSent: '2024-01-15T10:30:00Z' },
+    { channel: 'Push', status: 'Active', lastSent: '2024-01-13T14:18:00Z' },
+    { channel: 'SMS', status: 'Unsubscribed', unsubscribedAt: '2024-01-08T07:58:00Z' },
+  ],
+  'USR_b2c3d4': [
+    { channel: 'Email', status: 'Active', lastSent: '2024-01-14T09:00:00Z' },
+    { channel: 'Push', status: 'Unsubscribed', unsubscribedAt: '2024-01-10T16:44:00Z' },
+    { channel: 'SMS', status: 'Active', lastSent: '2024-01-12T10:59:00Z' },
+  ],
+};
+
+export const getChannelStatus = async (uid) => {
+  await new Promise(r => setTimeout(r, 200));
+  return CHANNEL_STATUS[uid] || [
+    { channel: 'Email', status: 'Active', lastSent: null },
+    { channel: 'Push', status: 'Active', lastSent: null },
+    { channel: 'SMS', status: 'Active', lastSent: null },
+  ];
+};

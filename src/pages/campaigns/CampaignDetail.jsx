@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import Badge, { StatusBadge } from '../../components/ui/Badge';
-import Table from '../../components/ui/Table';
 import Modal from '../../components/ui/Modal';
 import Spinner from '../../components/ui/Spinner';
 import { getCampaign } from '../../api/campaigns';
@@ -14,20 +13,99 @@ import styles from './CampaignDetail.module.css';
 const CHANNEL_BADGE = { Email: 'info', Push: 'purple', SMS: 'amber' };
 const TYPE_BADGE = { Transactional: 'gray', Marketing: 'success' };
 
-const ACTIVITY_LOG = Array.from({ length: 10 }, (_, i) => ({
-  id: String(i + 1),
-  timestamp: new Date(Date.now() - i * 3600000 * 24).toISOString(),
-  event: ['Sent', 'Delivered', 'Opened', 'Clicked', 'Sent', 'Delivered', 'Opened', 'Sent', 'Delivered', 'Clicked'][i],
-  recipient: `user${100 + i}@example.com`,
-  details: ['Batch send completed', 'Inbox delivery confirmed', 'Email opened', 'Link clicked', 'Batch send completed', 'Inbox delivery confirmed', 'Email opened', 'Batch send completed', 'Inbox delivery confirmed', 'CTA clicked'][i],
-}));
-
-const activityColumns = [
-  { key: 'timestamp', label: 'Time', render: (val) => <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>{formatDate(val)}</span> },
-  { key: 'event', label: 'Event', render: (val) => <Badge variant={val === 'Clicked' ? 'success' : val === 'Opened' ? 'info' : 'gray'}>{val}</Badge> },
-  { key: 'recipient', label: 'Recipient', render: (val) => <span style={{ fontSize: 13 }}>{val}</span> },
-  { key: 'details', label: 'Details', render: (val) => <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>{val}</span> },
+const TREND_7D = [
+  { date: 'Jan 9',  sent: 420, delivered: 385, opened: 108, clicked: 28 },
+  { date: 'Jan 10', sent: 380, delivered: 352, opened: 95,  clicked: 22 },
+  { date: 'Jan 11', sent: 510, delivered: 470, opened: 134, clicked: 35 },
+  { date: 'Jan 12', sent: 290, delivered: 268, opened: 78,  clicked: 18 },
+  { date: 'Jan 13', sent: 445, delivered: 410, opened: 122, clicked: 30 },
+  { date: 'Jan 14', sent: 380, delivered: 350, opened: 98,  clicked: 24 },
+  { date: 'Jan 15', sent: 520, delivered: 485, opened: 145, clicked: 38 },
 ];
+
+const TREND_30D = [
+  { date: 'Dec 17', sent: 310, delivered: 285, opened: 82,  clicked: 19 },
+  { date: 'Dec 18', sent: 420, delivered: 390, opened: 110, clicked: 27 },
+  { date: 'Dec 19', sent: 370, delivered: 340, opened: 96,  clicked: 22 },
+  { date: 'Dec 20', sent: 480, delivered: 445, opened: 128, clicked: 34 },
+  { date: 'Dec 21', sent: 290, delivered: 268, opened: 74,  clicked: 16 },
+  { date: 'Dec 22', sent: 350, delivered: 322, opened: 89,  clicked: 21 },
+  { date: 'Dec 23', sent: 510, delivered: 472, opened: 136, clicked: 38 },
+  { date: 'Dec 24', sent: 260, delivered: 240, opened: 66,  clicked: 14 },
+  { date: 'Dec 25', sent: 190, delivered: 175, opened: 48,  clicked: 10 },
+  { date: 'Dec 26', sent: 330, delivered: 305, opened: 86,  clicked: 20 },
+  { date: 'Dec 27', sent: 455, delivered: 420, opened: 120, clicked: 31 },
+  { date: 'Dec 28', sent: 390, delivered: 360, opened: 102, clicked: 26 },
+  { date: 'Dec 29', sent: 500, delivered: 462, opened: 132, clicked: 36 },
+  { date: 'Dec 30', sent: 340, delivered: 314, opened: 88,  clicked: 22 },
+  { date: 'Dec 31', sent: 280, delivered: 258, opened: 70,  clicked: 16 },
+  { date: 'Jan 1',  sent: 220, delivered: 202, opened: 54,  clicked: 11 },
+  { date: 'Jan 2',  sent: 360, delivered: 332, opened: 93,  clicked: 23 },
+  { date: 'Jan 3',  sent: 470, delivered: 435, opened: 124, clicked: 33 },
+  { date: 'Jan 4',  sent: 390, delivered: 360, opened: 101, clicked: 26 },
+  { date: 'Jan 5',  sent: 430, delivered: 397, opened: 113, clicked: 29 },
+  { date: 'Jan 6',  sent: 410, delivered: 378, opened: 107, clicked: 28 },
+  { date: 'Jan 7',  sent: 355, delivered: 328, opened: 92,  clicked: 23 },
+  { date: 'Jan 8',  sent: 495, delivered: 458, opened: 130, clicked: 35 },
+  { date: 'Jan 9',  sent: 420, delivered: 385, opened: 108, clicked: 28 },
+  { date: 'Jan 10', sent: 380, delivered: 352, opened: 95,  clicked: 22 },
+  { date: 'Jan 11', sent: 510, delivered: 470, opened: 134, clicked: 35 },
+  { date: 'Jan 12', sent: 290, delivered: 268, opened: 78,  clicked: 18 },
+  { date: 'Jan 13', sent: 445, delivered: 410, opened: 122, clicked: 30 },
+  { date: 'Jan 14', sent: 380, delivered: 350, opened: 98,  clicked: 24 },
+  { date: 'Jan 15', sent: 520, delivered: 485, opened: 145, clicked: 38 },
+];
+
+const BAR_COLORS = {
+  sent: '#378ADD',
+  delivered: '#2DC76D',
+  opened: '#F9A825',
+  clicked: '#9C6FDE',
+};
+
+const LEGEND_ITEMS = [
+  { key: 'sent', label: 'Sent' },
+  { key: 'delivered', label: 'Delivered' },
+  { key: 'opened', label: 'Opened' },
+  { key: 'clicked', label: 'Clicked' },
+];
+
+const DayChart = ({ data }) => {
+  const maxVal = Math.max(...data.flatMap(d => [d.sent, d.delivered, d.opened, d.clicked]));
+
+  return (
+    <div>
+      <div className={styles.chartLegend}>
+        {LEGEND_ITEMS.map(item => (
+          <div key={item.key} className={styles.legendItem}>
+            <span className={styles.legendDot} style={{ background: BAR_COLORS[item.key] }} />
+            <span className={styles.legendLabel}>{item.label}</span>
+          </div>
+        ))}
+      </div>
+      <div className={styles.chartContainer}>
+        {data.map((day) => (
+          <div key={day.date} className={styles.dayGroup}>
+            <div className={styles.barGroup}>
+              {LEGEND_ITEMS.map(item => (
+                <div
+                  key={item.key}
+                  className={styles.bar}
+                  style={{
+                    height: `${Math.round((day[item.key] / maxVal) * 100)}%`,
+                    background: BAR_COLORS[item.key],
+                  }}
+                  title={`${item.label}: ${day[item.key]}`}
+                />
+              ))}
+            </div>
+            <span className={styles.dateLabel}>{day.date}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const StatCard = ({ label, value, delta }) => (
   <div className={styles.statCard}>
@@ -58,6 +136,8 @@ const PERIOD_STATS = {
 
 const PERIOD_LABELS = { '7d': 'Last 7 days', '30d': 'Last 30 days', 'all': 'All time' };
 
+const TREND_PERIODS = ['Last 7 days', 'Last 30 days'];
+
 const CampaignDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -68,6 +148,7 @@ const CampaignDetail = () => {
   const [loading, setLoading] = useState(true);
   const [archiveModal, setArchiveModal] = useState(false);
   const [period, setPeriod] = useState('7d');
+  const [trendPeriod, setTrendPeriod] = useState('Last 7 days');
 
   useEffect(() => {
     Promise.all([getCampaign(id), getCampaignStats(id)]).then(([c, s]) => {
@@ -105,6 +186,8 @@ const CampaignDetail = () => {
     setArchiveModal(false);
     navigate('/campaigns');
   };
+
+  const trendData = trendPeriod === 'Last 7 days' ? TREND_7D : TREND_30D;
 
   return (
     <div>
@@ -202,13 +285,22 @@ const CampaignDetail = () => {
         </div>
       </div>
 
-      <div className={styles.sectionCard} style={{ padding: 0 }}>
-        <div style={{ padding: '20px 24px 16px' }}>
-          <p className={styles.sectionTitle} style={{ margin: 0 }}>Activity Log</p>
+      <div className={styles.sectionCard}>
+        <div className={styles.trendHeader}>
+          <p className={styles.sectionTitle} style={{ margin: 0 }}>Day-on-Day Performance</p>
+          <div className={styles.trendPills}>
+            {TREND_PERIODS.map(tp => (
+              <button
+                key={tp}
+                className={`${styles.periodPill} ${trendPeriod === tp ? styles.periodPillActive : ''}`}
+                onClick={() => setTrendPeriod(tp)}
+              >
+                {tp}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className={styles.tableCard}>
-          <Table columns={activityColumns} data={ACTIVITY_LOG} />
-        </div>
+        <DayChart data={trendData} />
       </div>
 
       <Modal
