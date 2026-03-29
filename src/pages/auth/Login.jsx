@@ -110,20 +110,22 @@ const Login = () => {
     <div className={styles.page}>
       {/* Left brand panel */}
       <div className={styles.leftPanel}>
-        <div className={styles.brand}>
-          <img src={brightIcon} alt="Bright Connect" className={styles.brandIcon} />
-          <span className={styles.brandName}>Bright Connect</span>
-        </div>
+        <div className={styles.leftContent}>
+          <div className={styles.brand}>
+            <img src={brightIcon} alt="Bright Connect" className={styles.brandIcon} />
+            <span className={styles.brandName}>Bright Connect</span>
+          </div>
 
-        <p className={styles.tagline}>Powering every conversation with your users</p>
+          <p className={styles.tagline}>Powering every conversation with your users</p>
 
-        <div className={styles.features}>
-          {FEATURES.map((f) => (
-            <div className={styles.featureItem} key={f}>
-              <CheckIcon />
-              <span>{f}</span>
-            </div>
-          ))}
+          <div className={styles.features}>
+            {FEATURES.map((f) => (
+              <div className={styles.featureItem} key={f}>
+                <CheckIcon />
+                <span>{f}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <span className={styles.copyright}>© 2025 Bright Money. Internal use only.</span>

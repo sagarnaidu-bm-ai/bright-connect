@@ -11,17 +11,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-left: 48px;
-  padding-right: 48px;
-  padding-bottom: 48px;
+  padding: 48px 64px;
   position: relative;
+}
+
+.leftContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 340px;
+  width: 100%;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .brandIcon {
@@ -37,22 +43,20 @@
   font-size: 24px;
   font-weight: 600;
   color: #ffffff;
+  letter-spacing: -0.3px;
 }
 
 .tagline {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.55);
   font-size: 14px;
+  line-height: 1.5;
   margin-bottom: 40px;
-  text-align: center;
 }
 
 .features {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 320px;
 }
 
 .featureItem {
