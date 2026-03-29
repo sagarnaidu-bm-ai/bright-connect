@@ -134,17 +134,18 @@ function formatChannelDate(iso) {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-function ChannelStatusCard({ channels }) {
+function ChannelStatusCard({ channels, onToggle, confirming }) {
   return (
     <div className={styles.channelCard}>
       {channels.map((item, idx) => {
         const Icon = CHANNEL_ICONS[item.channel] || EmailIcon;
         const isActive = item.status === 'Active';
+        const isConfirming = confirming === item.channel;
         return (
           <React.Fragment key={item.channel}>
             {idx > 0 && <div className={styles.channelDivider} />}
             <div className={styles.channelItem}>
-              <span className={styles.channelIcon}>
+              <span className={`${styles.channelIcon} ${isActive ? styles.channelIconActive : styles.channelIconUnsub}`}>
                 <Icon />
               </span>
               <span className={styles.channelName}>{item.channel}</span>
@@ -160,6 +161,29 @@ function ChannelStatusCard({ channels }) {
                     ? `unsubscribed: ${formatChannelDate(item.unsubscribedAt)}`
                     : ''}
               </span>
+              {isConfirming ? (
+                <div className={styles.channelConfirm}>
+                  <span className={styles.channelConfirmText}>
+                    {isActive ? 'Unsubscribe user from' : 'Re-activate user on'} {item.channel}?
+                  </span>
+                  <button
+                    className={isActive ? styles.channelConfirmDanger : styles.channelConfirmSuccess}
+                    onClick={() => onToggle(item.channel, 'confirm')}
+                  >
+                    {isActive ? 'Unsubscribe' : 'Activate'}
+                  </button>
+                  <button className={styles.channelConfirmCancel} onClick={() => onToggle(item.channel, 'cancel')}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className={`${styles.channelToggleBtn} ${isActive ? styles.channelToggleBtnUnsub : styles.channelToggleBtnActivate}`}
+                  onClick={() => onToggle(item.channel, 'init')}
+                >
+                  {isActive ? 'Unsubscribe' : 'Activate'}
+                </button>
+              )}
             </div>
           </React.Fragment>
         );
@@ -180,6 +204,7 @@ const UserProfile = () => {
   const [hasSearched, setHasSearched] = useState(false);
   const [eventFilter, setEventFilter] = useState('All');
   const [dateRange, setDateRange] = useState('Last 7 days');
+  const [confirmingChannel, setConfirmingChannel] = useState(null);
 
   const handleSearch = async () => {
     const trimmed = uid.trim();
@@ -210,6 +235,21 @@ const UserProfile = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') handleSearch();
+  };
+
+  const handleChannelToggle = (channel, action) => {
+    if (action === 'init') {
+      setConfirmingChannel(channel);
+    } else if (action === 'cancel') {
+      setConfirmingChannel(null);
+    } else if (action === 'confirm') {
+      setChannelStatus(prev => prev.map(c =>
+        c.channel === channel
+          ? { ...c, status: c.status === 'Active' ? 'Unsubscribed' : 'Active', unsubscribedAt: c.status === 'Active' ? new Date().toISOString() : null, lastSent: c.status === 'Unsubscribed' ? c.lastSent : c.lastSent }
+          : c
+      ));
+      setConfirmingChannel(null);
+    }
   };
 
   const filteredActivity = useMemo(() => {
@@ -261,7 +301,7 @@ const UserProfile = () => {
           <UserCard user={user} />
 
           {channelStatus.length > 0 && (
-            <ChannelStatusCard channels={channelStatus} />
+            <ChannelStatusCard channels={channelStatus} onToggle={handleChannelToggle} confirming={confirmingChannel} />
           )}
 
           <div className={styles.activitySection}>

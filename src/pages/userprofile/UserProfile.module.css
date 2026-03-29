@@ -272,7 +272,77 @@
 .channelDate {
   font-size: 12px;
   color: var(--text-muted);
+  flex: 1;
 }
+
+.channelIconActive { color: var(--green-primary); }
+.channelIconUnsub  { color: var(--text-disabled); }
+
+.channelToggleBtn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.channelToggleBtn:hover { opacity: 0.8; }
+.channelToggleBtnUnsub {
+  background: #fff4f4;
+  color: var(--error);
+  border-color: #f5c6c6;
+}
+.channelToggleBtnActivate {
+  background: var(--green-light);
+  color: var(--green-dark);
+  border-color: var(--green-primary);
+}
+
+.channelConfirm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.channelConfirmText {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.channelConfirmDanger {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid #f5c6c6;
+  background: #fff4f4;
+  color: var(--error);
+  cursor: pointer;
+}
+.channelConfirmDanger:hover { background: var(--error); color: white; }
+.channelConfirmSuccess {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--green-primary);
+  background: var(--green-light);
+  color: var(--green-dark);
+  cursor: pointer;
+}
+.channelConfirmSuccess:hover { background: var(--green-primary); color: white; }
+.channelConfirmCancel {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.channelConfirmCancel:hover { background: var(--bg-card); }
 
 /* ── Activity section ── */
 .activitySection {
