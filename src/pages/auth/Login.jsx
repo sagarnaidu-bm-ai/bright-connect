@@ -214,9 +214,9 @@ const Login = () => {
               <div className={styles.errorMsg}>{globalError}</div>
             )}
 
-            <a href="#" className={styles.forgotLink} tabIndex={-1}>
+            <button type="button" className={styles.forgotLink}>
               Forgot password?
-            </a>
+            </button>
 
             <button
               type="submit"
