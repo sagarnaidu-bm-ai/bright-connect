@@ -8,7 +8,7 @@ const SETTINGS_MOCK = {
   frequencyCapping: [
     { channel: 'Email', maxPerDay: 2, maxPerWeek: 5, appliesTo: 'Marketing only' },
     { channel: 'Push', maxPerDay: 3, maxPerWeek: 10, appliesTo: 'All campaigns' },
-    { channel: 'SMS', maxPerDay: 1, maxPerWeek: 3, appliesTo: 'Marketing only' },
+    { channel: 'SMS', maxPerDay: 1, maxPerWeek: 3, appliesTo: 'Transactional only' },
   ],
   unsubscribe: {
     email: true,
