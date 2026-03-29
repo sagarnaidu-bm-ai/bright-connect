@@ -46,87 +46,221 @@
   text-align: center;
   transition: border-color 0.15s ease;
 }
+.numInput:focus { border: 2px solid var(--green-primary); }
 
-.numInput:focus {
-  border: 2px solid var(--green-primary);
+/* ── Sender IDs table ── */
+.senderTable {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.toggleRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 0;
+.senderTh {
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: left;
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border-default);
 }
 
-.toggleRow:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+.senderTr {
+  border-bottom: 1px solid var(--border-default);
+}
+.senderTr:last-child { border-bottom: none; }
+.senderTr:hover { background: var(--bg-card); }
+
+.senderTd {
+  padding: 12px 16px;
+  font-size: 13px;
+  vertical-align: middle;
 }
 
-.toggleLeft {
+.channelPill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.channelPill_email { background: #E3F0FF; color: #378ADD; }
+.channelPill_sms   { background: #FFF3E0; color: #E65100; }
+
+.senderIdText {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.senderLabel {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.defaultBadge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.setDefaultBtn {
+  background: none;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  font-size: 12px;
+  padding: 3px 10px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.setDefaultBtn:hover { border-color: var(--green-primary); color: var(--green-dark); }
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.removeBtn:hover { color: var(--error); background: #fff0f0; }
+
+.senderInput {
+  height: 32px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-family: inherit;
+  width: 200px;
+  outline: none;
+  color: var(--text-primary);
+}
+.senderInput:focus { border-color: var(--green-primary); }
+
+.senderSelect {
+  height: 32px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: white;
+  color: var(--text-primary);
+}
+
+.addRowActions { display: flex; gap: 8px; align-items: center; }
+
+.saveRowBtn {
+  height: 30px;
+  padding: 0 14px;
+  background: var(--green-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.saveRowBtn:hover { background: var(--green-dark); }
+
+.cancelRowBtn {
+  height: 30px;
+  padding: 0 12px;
+  background: none;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.cancelRowBtn:hover { background: var(--bg-card); }
+
+/* ── Downloads ── */
+.downloadList { display: flex; flex-direction: column; }
+
+.downloadRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-default);
+}
+.downloadRow:last-child { border-bottom: none; padding-bottom: 0; }
+.downloadRow:first-child { padding-top: 0; }
+
+.downloadInfo {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  flex: 1;
 }
 
-.toggleLabel {
+.downloadLabel {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
 }
 
-.toggleDesc {
+.downloadDesc {
   font-size: 12px;
   color: var(--text-muted);
 }
 
-.toggle {
-  position: relative;
-  width: 42px;
-  height: 24px;
-  flex-shrink: 0;
+.dateFilterRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
 
-.toggleInput {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggleTrack {
-  display: block;
-  width: 42px;
-  height: 24px;
-  border-radius: 12px;
-  background: var(--border-default);
+.dateModePill {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-default);
+  background: white;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: background 0.2s ease;
-  position: relative;
+  transition: all 0.15s;
 }
-
-.toggleInput:checked + .toggleTrack {
+.dateModePill:hover { border-color: var(--green-primary); color: var(--green-dark); }
+.dateModePillActive {
   background: var(--green-primary);
+  border-color: var(--green-primary);
+  color: white;
 }
 
-.toggleThumb {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-  transition: transform 0.2s ease;
+.customDateRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.toggleInput:checked ~ .toggleThumb {
-  transform: translateX(18px);
+.dateInput {
+  height: 30px;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 0 8px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  color: var(--text-primary);
 }
+.dateInput:focus { border-color: var(--green-primary); }
 
-.toggleWrap {
-  position: relative;
-  cursor: pointer;
+.dateSep {
+  font-size: 12px;
+  color: var(--text-muted);
 }

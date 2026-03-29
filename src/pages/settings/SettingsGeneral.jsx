@@ -7,32 +7,64 @@ import { getSettings, updateSettings } from '../../api/settings';
 import { useToastContext } from '../../context/ToastContext';
 import styles from './SettingsGeneral.module.css';
 
-function Toggle({ checked, onChange, id }) {
-  return (
-    <label className={styles.toggleWrap} htmlFor={id}>
-      <span className={styles.toggle}>
-        <input
-          id={id}
-          type="checkbox"
-          className={styles.toggleInput}
-          checked={checked}
-          onChange={e => onChange(e.target.checked)}
-        />
-        <span className={styles.toggleTrack} />
-        <span
-          className={styles.toggleThumb}
-          style={{ transform: checked ? 'translateX(18px)' : 'translateX(0)' }}
-        />
-      </span>
-    </label>
-  );
+/* ── Sender ID mock data ── */
+const INITIAL_SENDERS = [
+  { id: 1, channel: 'Email', senderId: 'noreply@brightmoney.co', label: 'No Reply', isDefault: true },
+  { id: 2, channel: 'Email', senderId: 'support@brightmoney.co', label: 'Support', isDefault: false },
+  { id: 3, channel: 'SMS', senderId: 'BRIGHT', label: 'Bright SMS', isDefault: true },
+];
+
+/* ── Download helpers ── */
+function downloadCSV(filename, rows) {
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
 }
+
+const UNSUB_MOCK = [
+  ['user_id', 'email', 'channel', 'unsubscribed_at'],
+  ['USR_a1b2c3', 'arjun@example.com', 'Email', '2024-01-08'],
+  ['USR_d4e5f6', 'meera@example.com', 'Email', '2024-01-10'],
+  ['USR_g7h8i9', 'vijay@example.com', 'Email', '2024-01-12'],
+];
+
+const PUSH_OPTOUT_MOCK = [
+  ['user_id', 'email', 'opted_out_at'],
+  ['USR_b2c3d4', 'priya@example.com', '2024-01-10'],
+  ['USR_j0k1l2', 'karan@example.com', '2024-01-11'],
+];
+
+const ACTIVITY_MOCK = [
+  ['user_id', 'email', 'campaign', 'channel', 'event', 'timestamp'],
+  ['USR_a1b2c3', 'arjun@example.com', 'Payment Due Reminder', 'Email', 'Delivered', '2024-01-15 10:30'],
+  ['USR_b2c3d4', 'priya@example.com', 'Welcome to Bright', 'Push', 'Opened', '2024-01-14 09:00'],
+  ['USR_a1b2c3', 'arjun@example.com', 'OTP Verification', 'SMS', 'Delivered', '2024-01-12 11:00'],
+  ['USR_b2c3d4', 'priya@example.com', 'Reactivation Campaign', 'Push', 'Failed', '2024-01-10 16:45'],
+  ['USR_a1b2c3', 'arjun@example.com', 'Referral Bonus', 'Email', 'Clicked', '2024-01-08 07:55'],
+];
+
+/* ── Sub-components ── */
 
 const SettingsGeneral = () => {
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const { showToast } = useToastContext();
+
+  // Sender IDs
+  const [senders, setSenders] = useState(INITIAL_SENDERS);
+  const [newSender, setNewSender] = useState({ channel: 'Email', senderId: '', label: '' });
+  const [addingRow, setAddingRow] = useState(false);
+
+  // Download
+  const [activityDateMode, setActivityDateMode] = useState('30d');
+  const [activityFrom, setActivityFrom] = useState('');
+  const [activityTo, setActivityTo] = useState('');
 
   useEffect(() => {
     getSettings().then(s => {
@@ -61,16 +93,21 @@ const SettingsGeneral = () => {
     }
   };
 
-  const handleSaveUnsubscribe = async () => {
-    setSaving(true);
-    try {
-      await updateSettings({ unsubscribe: settings.unsubscribe });
-      showToast('Unsubscribe settings saved.', 'success');
-    } catch {
-      showToast('Failed to save settings.', 'error');
-    } finally {
-      setSaving(false);
-    }
+  const handleAddSender = () => {
+    if (!newSender.senderId.trim() || !newSender.label.trim()) return;
+    setSenders(prev => [...prev, { id: Date.now(), ...newSender, isDefault: false }]);
+    setNewSender({ channel: 'Email', senderId: '', label: '' });
+    setAddingRow(false);
+    showToast('Sender ID added.', 'success');
+  };
+
+  const handleRemoveSender = (id) => {
+    setSenders(prev => prev.filter(s => s.id !== id));
+    showToast('Sender ID removed.', 'success');
+  };
+
+  const handleSetDefault = (id) => {
+    setSenders(prev => prev.map(s => ({ ...s, isDefault: s.id === id ? true : (s.channel === prev.find(x => x.id === id)?.channel ? false : s.isDefault) })));
   };
 
   const cappingColumns = [
@@ -81,14 +118,8 @@ const SettingsGeneral = () => {
       render: (val, row) => {
         const idx = settings.frequencyCapping.findIndex(r => r.channel === row.channel);
         return (
-          <input
-            type="number"
-            min={0}
-            max={20}
-            className={styles.numInput}
-            value={val}
-            onChange={e => updateCapping(idx, 'maxPerDay', e.target.value)}
-          />
+          <input type="number" min={0} max={20} className={styles.numInput} value={val}
+            onChange={e => updateCapping(idx, 'maxPerDay', e.target.value)} />
         );
       },
     },
@@ -98,14 +129,8 @@ const SettingsGeneral = () => {
       render: (val, row) => {
         const idx = settings.frequencyCapping.findIndex(r => r.channel === row.channel);
         return (
-          <input
-            type="number"
-            min={0}
-            max={50}
-            className={styles.numInput}
-            value={val}
-            onChange={e => updateCapping(idx, 'maxPerWeek', e.target.value)}
-          />
+          <input type="number" min={0} max={50} className={styles.numInput} value={val}
+            onChange={e => updateCapping(idx, 'maxPerWeek', e.target.value)} />
         );
       },
     },
@@ -117,24 +142,19 @@ const SettingsGeneral = () => {
   ];
 
   if (loading) {
-    return (
-      <div style={{ position: 'relative', height: 200 }}>
-        <Spinner size="lg" centered />
-      </div>
-    );
+    return <div style={{ position: 'relative', height: 200 }}><Spinner size="lg" centered /></div>;
   }
 
   return (
     <div>
       <PageHeader title="Settings" />
 
+      {/* ── Frequency Capping ── */}
       <div className={styles.sectionCard}>
         <div className={styles.sectionHeader}>
           <div>
             <p className={styles.sectionTitle}>Frequency Capping</p>
-            <p className={styles.sectionDesc}>
-              Limit how many messages a user can receive per channel to avoid over-messaging.
-            </p>
+            <p className={styles.sectionDesc}>Limit how many marketing messages a user can receive per channel.</p>
           </div>
           <Button size="sm" onClick={handleSaveCapping} disabled={saving}>Save Changes</Button>
         </div>
@@ -143,41 +163,163 @@ const SettingsGeneral = () => {
         </div>
       </div>
 
+      {/* ── Sender IDs ── */}
       <div className={styles.sectionCard}>
         <div className={styles.sectionHeader}>
           <div>
-            <p className={styles.sectionTitle}>Unsubscribe Handling</p>
-            <p className={styles.sectionDesc}>
-              Control whether unsubscribe links are automatically appended to outgoing messages.
-            </p>
+            <p className={styles.sectionTitle}>Sender IDs</p>
+            <p className={styles.sectionDesc}>Manage email addresses and SMS sender IDs used to send campaigns.</p>
           </div>
-          <Button size="sm" onClick={handleSaveUnsubscribe} disabled={saving}>Save Changes</Button>
+          <Button size="sm" onClick={() => setAddingRow(true)} disabled={addingRow}>+ Add Sender</Button>
         </div>
 
-        <div className={styles.toggleRow}>
-          <div className={styles.toggleLeft}>
-            <span className={styles.toggleLabel}>Email Unsubscribe Link</span>
-            <span className={styles.toggleDesc}>Automatically add an unsubscribe footer to all marketing emails</span>
-          </div>
-          <Toggle
-            id="unsub-email"
-            checked={settings.unsubscribe.email}
-            onChange={val => setSettings(prev => ({ ...prev, unsubscribe: { ...prev.unsubscribe, email: val } }))}
-          />
-        </div>
+        <div className={styles.tableCard}>
+          <table className={styles.senderTable}>
+            <thead>
+              <tr>
+                <th className={styles.senderTh}>Channel</th>
+                <th className={styles.senderTh}>Sender ID / Address</th>
+                <th className={styles.senderTh}>Label</th>
+                <th className={styles.senderTh}>Default</th>
+                <th className={styles.senderTh}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {senders.map(s => (
+                <tr key={s.id} className={styles.senderTr}>
+                  <td className={styles.senderTd}>
+                    <span className={`${styles.channelPill} ${styles['channelPill_' + s.channel.toLowerCase()]}`}>{s.channel}</span>
+                  </td>
+                  <td className={styles.senderTd}><span className={styles.senderIdText}>{s.senderId}</span></td>
+                  <td className={styles.senderTd}><span className={styles.senderLabel}>{s.label}</span></td>
+                  <td className={styles.senderTd}>
+                    {s.isDefault
+                      ? <span className={styles.defaultBadge}>Default</span>
+                      : <button className={styles.setDefaultBtn} onClick={() => handleSetDefault(s.id)}>Set default</button>
+                    }
+                  </td>
+                  <td className={styles.senderTd}>
+                    {!s.isDefault && (
+                      <button className={styles.removeBtn} onClick={() => handleRemoveSender(s.id)} aria-label="Remove">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
 
-        <div className={styles.toggleRow}>
-          <div className={styles.toggleLeft}>
-            <span className={styles.toggleLabel}>Push Opt-out Handling</span>
-            <span className={styles.toggleDesc}>Respect system-level push notification opt-outs for all campaigns</span>
-          </div>
-          <Toggle
-            id="unsub-push"
-            checked={settings.unsubscribe.push}
-            onChange={val => setSettings(prev => ({ ...prev, unsubscribe: { ...prev.unsubscribe, push: val } }))}
-          />
+              {addingRow && (
+                <tr className={styles.senderTr}>
+                  <td className={styles.senderTd}>
+                    <select className={styles.senderSelect} value={newSender.channel}
+                      onChange={e => setNewSender(p => ({ ...p, channel: e.target.value }))}>
+                      <option>Email</option>
+                      <option>SMS</option>
+                    </select>
+                  </td>
+                  <td className={styles.senderTd}>
+                    <input className={styles.senderInput} placeholder="e.g. alerts@brightmoney.co or BRIGHT"
+                      value={newSender.senderId} onChange={e => setNewSender(p => ({ ...p, senderId: e.target.value }))} />
+                  </td>
+                  <td className={styles.senderTd}>
+                    <input className={styles.senderInput} placeholder="Label"
+                      value={newSender.label} onChange={e => setNewSender(p => ({ ...p, label: e.target.value }))} />
+                  </td>
+                  <td className={styles.senderTd}></td>
+                  <td className={styles.senderTd}>
+                    <div className={styles.addRowActions}>
+                      <button className={styles.saveRowBtn} onClick={handleAddSender}>Add</button>
+                      <button className={styles.cancelRowBtn} onClick={() => setAddingRow(false)}>Cancel</button>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
+
+      {/* ── Downloads ── */}
+      <div className={styles.sectionCard}>
+        <div className={styles.sectionHeader}>
+          <div>
+            <p className={styles.sectionTitle}>Downloads</p>
+            <p className={styles.sectionDesc}>Export user lists and activity data as CSV files.</p>
+          </div>
+        </div>
+
+        <div className={styles.downloadList}>
+
+          {/* Unsubscribe user list */}
+          <div className={styles.downloadRow}>
+            <div className={styles.downloadInfo}>
+              <span className={styles.downloadLabel}>Unsubscribe User List</span>
+              <span className={styles.downloadDesc}>All users who have unsubscribed from Email communications.</span>
+            </div>
+            <Button variant="secondary" size="sm" onClick={() => {
+              downloadCSV('unsubscribed_users.csv', UNSUB_MOCK);
+              showToast('Downloading unsubscribe list...', 'success');
+            }}>
+              Download CSV
+            </Button>
+          </div>
+
+          {/* Push opt-out user list */}
+          <div className={styles.downloadRow}>
+            <div className={styles.downloadInfo}>
+              <span className={styles.downloadLabel}>Push Opt-out User List</span>
+              <span className={styles.downloadDesc}>All users who have opted out of Push notifications.</span>
+            </div>
+            <Button variant="secondary" size="sm" onClick={() => {
+              downloadCSV('push_optout_users.csv', PUSH_OPTOUT_MOCK);
+              showToast('Downloading push opt-out list...', 'success');
+            }}>
+              Download CSV
+            </Button>
+          </div>
+
+          {/* Activity logs with date filter */}
+          <div className={styles.downloadRow}>
+            <div className={styles.downloadInfo}>
+              <span className={styles.downloadLabel}>Activity Logs</span>
+              <span className={styles.downloadDesc}>Communication event logs (sent, delivered, opened, clicked) for the selected period.</span>
+              <div className={styles.dateFilterRow}>
+                <button
+                  className={`${styles.dateModePill} ${activityDateMode === '30d' ? styles.dateModePillActive : ''}`}
+                  onClick={() => { setActivityDateMode('30d'); setActivityFrom(''); setActivityTo(''); }}
+                >
+                  Last 30 days
+                </button>
+                <button
+                  className={`${styles.dateModePill} ${activityDateMode === 'custom' ? styles.dateModePillActive : ''}`}
+                  onClick={() => setActivityDateMode('custom')}
+                >
+                  Custom range
+                </button>
+                {activityDateMode === 'custom' && (
+                  <div className={styles.customDateRow}>
+                    <input type="date" className={styles.dateInput} value={activityFrom}
+                      onChange={e => setActivityFrom(e.target.value)} aria-label="From date" />
+                    <span className={styles.dateSep}>—</span>
+                    <input type="date" className={styles.dateInput} value={activityTo}
+                      onChange={e => setActivityTo(e.target.value)} aria-label="To date" />
+                  </div>
+                )}
+              </div>
+            </div>
+            <Button variant="secondary" size="sm" onClick={() => {
+              downloadCSV('activity_logs.csv', ACTIVITY_MOCK);
+              showToast('Downloading activity logs...', 'success');
+            }}>
+              Download CSV
+            </Button>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   );
 };
