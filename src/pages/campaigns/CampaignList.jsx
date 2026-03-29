@@ -215,6 +215,7 @@ const CampaignList = () => {
         }
       />
 
+      {/* Row 1: Name search + date filter */}
       <div className={styles.filterRow}>
         <input
           type="text"
@@ -224,19 +225,12 @@ const CampaignList = () => {
           onChange={e => setNameSearch(e.target.value)}
           aria-label="Search campaigns by name"
         />
-        <FilterPills label="Channel" options={CHANNEL_TYPES} value={channelFilter} onChange={setChannelFilter} />
-        <FilterPills label="Type" options={CAMPAIGN_TYPES} value={typeFilter} onChange={setTypeFilter} />
-        <FilterPills label="Status" options={CAMPAIGN_STATUSES} value={statusFilter} onChange={setStatusFilter} />
-      </div>
-
-      <div className={styles.dateFilterRow}>
         <span className={styles.filterLabel}>Created:</span>
         <input
           type="date"
           className={styles.dateInput}
           value={dateFrom}
           onChange={e => setDateFrom(e.target.value)}
-          placeholder="From"
           aria-label="Created from date"
         />
         <span className={styles.dateSeparator}>—</span>
@@ -245,17 +239,20 @@ const CampaignList = () => {
           className={styles.dateInput}
           value={dateTo}
           onChange={e => setDateTo(e.target.value)}
-          placeholder="To"
           aria-label="Created to date"
         />
         {(dateFrom || dateTo) && (
-          <button
-            className={styles.dateClear}
-            onClick={() => { setDateFrom(''); setDateTo(''); }}
-          >
+          <button className={styles.dateClear} onClick={() => { setDateFrom(''); setDateTo(''); }}>
             Clear
           </button>
         )}
+      </div>
+
+      {/* Row 2: Channel, Type, Status pill filters */}
+      <div className={styles.filterRow}>
+        <FilterPills label="Channel" options={CHANNEL_TYPES} value={channelFilter} onChange={setChannelFilter} />
+        <FilterPills label="Type" options={CAMPAIGN_TYPES} value={typeFilter} onChange={setTypeFilter} />
+        <FilterPills label="Status" options={CAMPAIGN_STATUSES} value={statusFilter} onChange={setStatusFilter} />
       </div>
 
       <div className={styles.tableCard}>
