@@ -56,53 +56,99 @@ const TREND_30D = [
   { date: 'Jan 15', sent: 520, delivered: 485, opened: 145, clicked: 38 },
 ];
 
-const BAR_COLORS = {
-  sent: '#378ADD',
-  delivered: '#2DC76D',
-  opened: '#F9A825',
-  clicked: '#9C6FDE',
-};
+const LINE_COLORS = { sent: '#378ADD', delivered: '#2DC76D' };
 
-const LEGEND_ITEMS = [
-  { key: 'sent', label: 'Sent' },
-  { key: 'delivered', label: 'Delivered' },
-  { key: 'opened', label: 'Opened' },
-  { key: 'clicked', label: 'Clicked' },
-];
+const LineChart = ({ data }) => {
+  const W = 900, H = 220, padL = 48, padR = 16, padT = 16, padB = 32;
+  const chartW = W - padL - padR;
+  const chartH = H - padT - padB;
 
-const DayChart = ({ data }) => {
-  const maxVal = Math.max(...data.flatMap(d => [d.sent, d.delivered, d.opened, d.clicked]));
+  const maxVal = Math.max(...data.flatMap(d => [d.sent, d.delivered]));
+  const minVal = 0;
+  const range = maxVal - minVal || 1;
+
+  const xStep = chartW / (data.length - 1);
+  const toX = (i) => padL + i * xStep;
+  const toY = (v) => padT + chartH - ((v - minVal) / range) * chartH;
+
+  const makePath = (key) =>
+    data.map((d, i) => `${i === 0 ? 'M' : 'L'}${toX(i).toFixed(1)},${toY(d[key]).toFixed(1)}`).join(' ');
+
+  const makeArea = (key) => {
+    const line = makePath(key);
+    const last = data.length - 1;
+    return `${line} L${toX(last).toFixed(1)},${(padT + chartH).toFixed(1)} L${padL.toFixed(1)},${(padT + chartH).toFixed(1)} Z`;
+  };
+
+  const yTicks = [0, 0.25, 0.5, 0.75, 1].map(t => Math.round(minVal + t * range));
 
   return (
     <div>
       <div className={styles.chartLegend}>
-        {LEGEND_ITEMS.map(item => (
+        {[{ key: 'sent', label: 'Sent' }, { key: 'delivered', label: 'Delivered' }].map(item => (
           <div key={item.key} className={styles.legendItem}>
-            <span className={styles.legendDot} style={{ background: BAR_COLORS[item.key] }} />
+            <span className={styles.legendDot} style={{ background: LINE_COLORS[item.key] }} />
             <span className={styles.legendLabel}>{item.label}</span>
           </div>
         ))}
       </div>
-      <div className={styles.chartContainer}>
-        {data.map((day) => (
-          <div key={day.date} className={styles.dayGroup}>
-            <div className={styles.barGroup}>
-              {LEGEND_ITEMS.map(item => (
-                <div
-                  key={item.key}
-                  className={styles.bar}
-                  style={{
-                    height: `${Math.round((day[item.key] / maxVal) * 100)}%`,
-                    background: BAR_COLORS[item.key],
-                  }}
-                  title={`${item.label}: ${day[item.key]}`}
-                />
-              ))}
-            </div>
-            <span className={styles.dateLabel}>{day.date}</span>
-          </div>
+      <svg viewBox={`0 0 ${W} ${H}`} className={styles.lineChart} aria-hidden="true">
+        <defs>
+          <linearGradient id="sentGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#378ADD" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#378ADD" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="deliveredGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2DC76D" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#2DC76D" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Y-axis grid lines + labels */}
+        {yTicks.map((tick) => {
+          const y = toY(tick);
+          return (
+            <g key={tick}>
+              <line x1={padL} y1={y} x2={W - padR} y2={y} stroke="#E5EDE8" strokeWidth="1" />
+              <text x={padL - 6} y={y + 4} fontSize="10" fill="#888" textAnchor="end">{tick}</text>
+            </g>
+          );
+        })}
+
+        {/* Area fills */}
+        <path d={makeArea('sent')} fill="url(#sentGrad)" />
+        <path d={makeArea('delivered')} fill="url(#deliveredGrad)" />
+
+        {/* Lines */}
+        <path d={makePath('sent')} fill="none" stroke="#378ADD" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        <path d={makePath('delivered')} fill="none" stroke="#2DC76D" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+
+        {/* Dots + tooltips */}
+        {data.map((d, i) => (
+          <g key={d.date}>
+            <circle cx={toX(i)} cy={toY(d.sent)} r="3.5" fill="#378ADD" stroke="white" strokeWidth="1.5">
+              <title>Sent: {d.sent}</title>
+            </circle>
+            <circle cx={toX(i)} cy={toY(d.delivered)} r="3.5" fill="#2DC76D" stroke="white" strokeWidth="1.5">
+              <title>Delivered: {d.delivered}</title>
+            </circle>
+          </g>
         ))}
-      </div>
+
+        {/* X-axis labels */}
+        {data.map((d, i) => (
+          <text
+            key={d.date}
+            x={toX(i)}
+            y={H - 4}
+            fontSize="10"
+            fill="#888"
+            textAnchor="middle"
+          >
+            {d.date}
+          </text>
+        ))}
+      </svg>
     </div>
   );
 };
@@ -300,7 +346,7 @@ const CampaignDetail = () => {
             ))}
           </div>
         </div>
-        <DayChart data={trendData} />
+        <LineChart data={trendData} />
       </div>
 
       <Modal

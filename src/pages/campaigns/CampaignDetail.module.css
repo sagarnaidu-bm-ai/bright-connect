@@ -232,6 +232,13 @@
   font-weight: 500;
 }
 
+.lineChart {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
 .chartContainer {
   display: flex;
   flex-direction: row;
