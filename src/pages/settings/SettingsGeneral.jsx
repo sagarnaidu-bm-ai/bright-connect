@@ -39,14 +39,6 @@ const PUSH_OPTOUT_MOCK = [
   ['USR_j0k1l2', 'karan@example.com', '2024-01-11'],
 ];
 
-const ACTIVITY_MOCK = [
-  ['user_id', 'email', 'campaign', 'channel', 'event', 'timestamp'],
-  ['USR_a1b2c3', 'arjun@example.com', 'Payment Due Reminder', 'Email', 'Delivered', '2024-01-15 10:30'],
-  ['USR_b2c3d4', 'priya@example.com', 'Welcome to Bright', 'Push', 'Opened', '2024-01-14 09:00'],
-  ['USR_a1b2c3', 'arjun@example.com', 'OTP Verification', 'SMS', 'Delivered', '2024-01-12 11:00'],
-  ['USR_b2c3d4', 'priya@example.com', 'Reactivation Campaign', 'Push', 'Failed', '2024-01-10 16:45'],
-  ['USR_a1b2c3', 'arjun@example.com', 'Referral Bonus', 'Email', 'Clicked', '2024-01-08 07:55'],
-];
 
 /* ── Sub-components ── */
 
@@ -61,10 +53,6 @@ const SettingsGeneral = () => {
   const [newSender, setNewSender] = useState({ channel: 'Email', senderId: '', label: '' });
   const [addingRow, setAddingRow] = useState(false);
 
-  // Download
-  const [activityDateMode, setActivityDateMode] = useState('30d');
-  const [activityFrom, setActivityFrom] = useState('');
-  const [activityTo, setActivityTo] = useState('');
 
   useEffect(() => {
     getSettings().then(s => {
@@ -275,43 +263,6 @@ const SettingsGeneral = () => {
             <Button variant="secondary" size="sm" onClick={() => {
               downloadCSV('push_optout_users.csv', PUSH_OPTOUT_MOCK);
               showToast('Downloading push opt-out list...', 'success');
-            }}>
-              Download CSV
-            </Button>
-          </div>
-
-          {/* Activity logs with date filter */}
-          <div className={styles.downloadRow}>
-            <div className={styles.downloadInfo}>
-              <span className={styles.downloadLabel}>Activity Logs</span>
-              <span className={styles.downloadDesc}>Communication event logs (sent, delivered, opened, clicked) for the selected period.</span>
-              <div className={styles.dateFilterRow}>
-                <button
-                  className={`${styles.dateModePill} ${activityDateMode === '30d' ? styles.dateModePillActive : ''}`}
-                  onClick={() => { setActivityDateMode('30d'); setActivityFrom(''); setActivityTo(''); }}
-                >
-                  Last 30 days
-                </button>
-                <button
-                  className={`${styles.dateModePill} ${activityDateMode === 'custom' ? styles.dateModePillActive : ''}`}
-                  onClick={() => setActivityDateMode('custom')}
-                >
-                  Custom range
-                </button>
-                {activityDateMode === 'custom' && (
-                  <div className={styles.customDateRow}>
-                    <input type="date" className={styles.dateInput} value={activityFrom}
-                      onChange={e => setActivityFrom(e.target.value)} aria-label="From date" />
-                    <span className={styles.dateSep}>—</span>
-                    <input type="date" className={styles.dateInput} value={activityTo}
-                      onChange={e => setActivityTo(e.target.value)} aria-label="To date" />
-                  </div>
-                )}
-              </div>
-            </div>
-            <Button variant="secondary" size="sm" onClick={() => {
-              downloadCSV('activity_logs.csv', ACTIVITY_MOCK);
-              showToast('Downloading activity logs...', 'success');
             }}>
               Download CSV
             </Button>
