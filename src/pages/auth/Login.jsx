@@ -26,14 +26,6 @@ const GoogleLogo = () => (
   </svg>
 );
 
-const MicrosoftLogo = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="8.5" height="8.5" fill="#F25022" />
-    <rect x="9.5" y="0" width="8.5" height="8.5" fill="#7FBA00" />
-    <rect x="0" y="9.5" width="8.5" height="8.5" fill="#00A4EF" />
-    <rect x="9.5" y="9.5" width="8.5" height="8.5" fill="#FFB900" />
-  </svg>
-);
 
 const CheckIcon = () => (
   <svg
@@ -70,7 +62,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [globalError, setGlobalError] = useState('');
-  const [loadingSSO, setLoadingSSO] = useState(null); // 'google' | 'microsoft' | null
+  const [loadingSSO, setLoadingSSO] = useState(null); // 'google' | null
   const [loadingForm, setLoadingForm] = useState(false);
 
   const handleSSOClick = (provider) => {
@@ -157,20 +149,6 @@ const Login = () => {
                 <GoogleLogo />
               )}
               Continue with Google
-            </button>
-
-            <button
-              type="button"
-              className={styles.ssoBtn}
-              onClick={() => handleSSOClick('microsoft')}
-              disabled={isSSO || loadingForm}
-            >
-              {loadingSSO === 'microsoft' ? (
-                <span className={styles.ssoBtnSpinner} />
-              ) : (
-                <MicrosoftLogo />
-              )}
-              Continue with Microsoft
             </button>
           </div>
 
