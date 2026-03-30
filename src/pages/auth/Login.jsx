@@ -164,6 +164,16 @@ const Login = () => {
           </form>
 
           <p className={styles.bottomNote}>Access restricted to @brightmoney.co accounts</p>
+
+          <div className={styles.mvpNote}>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
+              <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.2"/>
+              <path d="M6.5 5.5v3M6.5 4.5v.3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+            </svg>
+            <span>
+              <strong>MVP build</strong> — Authentication is not yet implemented. Click <em>Continue with Google</em> or <em>Sign in</em> to proceed directly into the app.
+            </span>
+          </div>
         </div>
       </div>
 
