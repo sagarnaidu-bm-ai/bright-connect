@@ -75,7 +75,7 @@ const TRIGGER_META = {
   },
 };
 
-function EnhancedRadioCardGroup({ label, options, value, onChange, error, name, metaMap, required, extras, threeCol }) {
+function EnhancedRadioCardGroup({ label, options, value, onChange, error, name, metaMap, required, extras, threeCol, disabledOptions = [] }) {
   return (
     <div className={styles.section}>
       <span className={styles.sectionLabel}>
@@ -86,20 +86,23 @@ function EnhancedRadioCardGroup({ label, options, value, onChange, error, name, 
         {options.map(opt => {
           const meta = metaMap?.[opt] || {};
           const isActive = value === opt;
+          const isDisabled = disabledOptions.includes(opt);
           return (
             <label
               key={opt}
-              className={`${styles.radioCard} ${isActive ? styles.radioCardActive : ''}`}
+              className={`${styles.radioCard} ${isActive ? styles.radioCardActive : ''} ${isDisabled ? styles.radioCardDisabled : ''}`}
+              title={isDisabled ? meta.disabledNote || `Not available` : undefined}
             >
               <input
                 type="radio"
                 name={name}
                 value={opt}
                 checked={isActive}
-                onChange={() => onChange(opt)}
+                onChange={() => !isDisabled && onChange(opt)}
                 className={styles.radioInput}
+                disabled={isDisabled}
               />
-              {isActive && (
+              {isActive && !isDisabled && (
                 <span className={styles.radioCheckmark}>
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -107,14 +110,17 @@ function EnhancedRadioCardGroup({ label, options, value, onChange, error, name, 
                 </span>
               )}
               {meta.icon && (
-                <span className={`${styles.radioIcon} ${isActive ? styles.radioIconActive : ''}`}>
+                <span className={`${styles.radioIcon} ${isActive && !isDisabled ? styles.radioIconActive : ''}`}>
                   {meta.icon}
                 </span>
               )}
               <span className={styles.radioTitle}>{opt}</span>
               {meta.desc && <span className={styles.radioDesc}>{meta.desc}</span>}
-              {meta.note && <span className={styles.radioNote}>{meta.note}</span>}
-              {extras?.[opt]}
+              {isDisabled
+                ? <span className={styles.radioDisabledNote}>Not available for Marketing campaigns</span>
+                : meta.note && <span className={styles.radioNote}>{meta.note}</span>
+              }
+              {!isDisabled && extras?.[opt]}
             </label>
           );
         })}
@@ -125,7 +131,13 @@ function EnhancedRadioCardGroup({ label, options, value, onChange, error, name, 
 }
 
 const Step1Setup = ({ formData, updateForm, errors }) => {
-  const showSmsWarning = formData.channel === 'SMS' && formData.type === 'Marketing';
+  const handleTypeChange = (val) => {
+    const updates = { type: val };
+    if (val === 'Marketing' && formData.channel === 'SMS') {
+      updates.channel = '';
+    }
+    updateForm(updates);
+  };
 
   return (
     <div>
@@ -147,7 +159,7 @@ const Step1Setup = ({ formData, updateForm, errors }) => {
           name="type"
           options={CAMPAIGN_TYPES}
           value={formData.type}
-          onChange={val => updateForm({ type: val })}
+          onChange={handleTypeChange}
           error={errors.type}
           metaMap={CAMPAIGN_TYPE_META}
           required
@@ -165,15 +177,8 @@ const Step1Setup = ({ formData, updateForm, errors }) => {
           metaMap={CHANNEL_META}
           required
           threeCol
+          disabledOptions={formData.type === 'Marketing' ? ['SMS'] : []}
         />
-        {showSmsWarning && (
-          <div className={styles.smsWarning}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-              <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm0 4v3M8 11v.5" stroke="var(--error)" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-            SMS is only available for Transactional campaigns. Please change the campaign type or select a different channel.
-          </div>
-        )}
       </div>
 
       <div className={styles.fieldCard}>

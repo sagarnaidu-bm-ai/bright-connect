@@ -139,6 +139,25 @@
   opacity: 0.7;
 }
 
+.radioCardDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--bg-surface);
+}
+
+.radioCardDisabled:hover {
+  border-color: var(--border-default);
+  box-shadow: none;
+}
+
+.radioDisabledNote {
+  font-size: 11px;
+  color: var(--text-disabled);
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
 .errorText {
   font-size: 12px;
   color: var(--error);

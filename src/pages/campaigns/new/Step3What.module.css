@@ -728,3 +728,50 @@
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Push — On Tap Action ── */
+.tapActionRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tapPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-default);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.tapPill:hover {
+  border-color: var(--green-primary);
+  color: var(--green-dark);
+}
+
+.tapPillActive {
+  background: var(--green-light);
+  border-color: var(--green-primary);
+  color: var(--green-dark);
+}
+
+.tapHint {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 0;
+}
+
+.deeplinkInputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

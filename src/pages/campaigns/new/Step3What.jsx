@@ -349,6 +349,8 @@ function PushPhoneMockup({ title, body }) {
 }
 
 function PushContent({ formData, updateForm, errors }) {
+  const tapAction = formData.pushTapAction || 'app_open';
+
   return (
     <div className={styles.pushLayout}>
       <div className={styles.pushForm}>
@@ -386,6 +388,52 @@ function PushContent({ formData, updateForm, errors }) {
             <span className={styles.textareaCount}>{(formData.messageBody || '').length}/200</span>
           </div>
           {errors.messageBody && <p className={styles.errorText}>{errors.messageBody}</p>}
+        </div>
+
+        <div className={styles.fieldCard}>
+          <label className={styles.fieldLabel}>On Tap Action</label>
+          <div className={styles.tapActionRow}>
+            <button
+              type="button"
+              className={`${styles.tapPill} ${tapAction === 'app_open' ? styles.tapPillActive : ''}`}
+              onClick={() => updateForm({ pushTapAction: 'app_open', pushDeeplink: '' })}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="2" y="1" width="10" height="12" rx="2" stroke="currentColor" strokeWidth="1.3" fill="none"/>
+                <circle cx="7" cy="10.5" r="0.8" fill="currentColor"/>
+                <path d="M5 3.5h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+              </svg>
+              App Open
+            </button>
+            <button
+              type="button"
+              className={`${styles.tapPill} ${tapAction === 'deeplink' ? styles.tapPillActive : ''}`}
+              onClick={() => updateForm({ pushTapAction: 'deeplink' })}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M5.5 8.5L8.5 5.5M6 3H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                <path d="M9 1h4v4M13 1L8 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Deeplink / Open URL
+            </button>
+          </div>
+
+          {tapAction === 'app_open' && (
+            <p className={styles.tapHint}>Tapping the notification will open the app to its default screen.</p>
+          )}
+
+          {tapAction === 'deeplink' && (
+            <div className={styles.deeplinkInputWrap}>
+              <input
+                type="text"
+                className={styles.textInput}
+                value={formData.pushDeeplink || ''}
+                onChange={e => updateForm({ pushDeeplink: e.target.value })}
+                placeholder="e.g. bright://payments/due  or  https://app.brightmoney.co/pay"
+              />
+              <p className={styles.tapHint}>Enter an in-app deeplink (bright://) or a web URL (https://). If left blank, defaults to app open.</p>
+            </div>
+          )}
         </div>
       </div>
 
